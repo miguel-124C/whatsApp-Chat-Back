@@ -1,0 +1,12 @@
+
+/dist
+node_modules
+/json
+.env
+.vscode
+
+package-lock.json
+
+# Registro de contctactos y chat
+/contacts
+/messages
