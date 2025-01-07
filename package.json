@@ -2,10 +2,11 @@
   "name": "cloud-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsnd --respawn --clear src/app.ts",
+    "build": "tsc",
     "start": "npx tsc && node dist/app.js"
   },
   "keywords": [],
