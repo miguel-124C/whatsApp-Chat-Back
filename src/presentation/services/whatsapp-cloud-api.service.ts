@@ -94,16 +94,15 @@ export class WhatsAppCloudApi {
 
             this.contactService.createContact(newContact);
             this.chatService.initChat({ phoneNumber, nameContact, messages: [ lastMessage ] });
-            
-            return true;
+        }else{
+            this.contactService.updateLastMessage(phoneNumber, lastMessage);
+        
+            const chat = this.chatService.addMessage(phoneNumber, lastMessage);
+            WssService.instance.sendMessage('on-chat-changed', chat);
         }
 
-        this.contactService.updateLastMessage(phoneNumber, lastMessage);
         const contactsOrder = this.contactService.moveContactInFirstPosition( phoneNumber );
-
-        const chat = this.chatService.addMessage(phoneNumber, lastMessage);
-        WssService.instance.sendMessage('on-chat-changed', chat);
-        WssService.instance.sendMessage('on-contact-new', contactsOrder);
+        WssService.instance.sendMessage('on-contact-changed', contactsOrder);
 
         return true;
     }
