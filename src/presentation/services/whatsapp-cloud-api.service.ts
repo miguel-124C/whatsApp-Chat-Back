@@ -24,7 +24,6 @@ export class WhatsAppCloudApi {
     sendMessage = async (to: string, message: string) => {
         console.log('Se envio un mensaje');
         try {
-            console.log(to, message);
             const responseMessage = await axios({
                 method: "POST",
                 url: `${this.basUrl}/${Envs.WHATSAPP_BUSINESS_PHONE_NUMBER_ID}/messages`,
