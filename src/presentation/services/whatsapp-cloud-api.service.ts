@@ -22,6 +22,7 @@ export class WhatsAppCloudApi {
     }
 
     sendMessage = async (to: string, message: string) => {
+        console.log('Se envio un mensaje');
         try {
             console.log(to, message);
             const responseMessage = await axios({
@@ -75,6 +76,7 @@ export class WhatsAppCloudApi {
     };
 
     reciveMessage = async (reciveMessageWhatsAppDto: ReciveMessageWhatsAppDto ) => {
+        console.log('Se recibio un mensaje');
         const { contacts, messages } = reciveMessageWhatsAppDto!;
 
         const phoneNumber = contacts.wa_id;
