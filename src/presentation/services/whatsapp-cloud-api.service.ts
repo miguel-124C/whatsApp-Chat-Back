@@ -4,7 +4,7 @@ import { ReciveMessageWhatsAppDto } from "../../domain/dtos/recive-message-whats
 import { ContactService } from "./contact.service";
 import { ChatService } from "./chat.service";
 import { WssService } from "./wss.service";
-import { Message, StatusMessage, TypeMessage } from "../interfaces";
+import { Message, ShipmentStatus, StatusMessage, TypeMessage } from "../interfaces";
 
 export class WhatsAppCloudApi {
 
@@ -54,6 +54,7 @@ export class WhatsAppCloudApi {
 
             this.contactService.updateLastMessage(to, lastMessage);
             WssService.instance.sendMessage('on-chat-changed', chat);
+            WssService.instance.sendMessage('on-contact-changed', this.getListContacts());
 
             return true;
         } catch (error) {
@@ -107,4 +108,11 @@ export class WhatsAppCloudApi {
 
         return true;
     }
+
+    updateStatusMessage( shipmentStatus: ShipmentStatus ){
+        console.log(shipmentStatus.status);
+        const chat = this.chatService.updateStatusMessage(shipmentStatus);
+        WssService.instance.sendMessage('on-chat-changed', chat);
+    }
+
 }

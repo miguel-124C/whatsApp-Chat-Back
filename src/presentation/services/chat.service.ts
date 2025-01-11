@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { Chat, Message } from "../interfaces";
+import { Chat, Message, ShipmentStatus, StatusMessage } from "../interfaces";
 
 
 export class ChatService {
@@ -48,22 +48,40 @@ export class ChatService {
         });
     }
 
+    guardarMessageInJson( phoneNumber: string, chat: Chat ){
+        const filePath = path.join(this.pathMessages, `${phoneNumber}.json`);
+        // Sobrescribir el archivo JSON con el nuevo contenido del chat
+        fs.writeFileSync(filePath, JSON.stringify(chat, null, 4), 'utf-8');
+    }
+
     addMessage( phoneNumber: string, message: Message ){
         const chat = this.getChatByPhoneNumber( phoneNumber );
         
-         // Si no existe el chat, deberías manejar este caso (crear un nuevo chat, por ejemplo)
+        // Si no existe el chat, deberías manejar este caso (crear un nuevo chat, por ejemplo)
         if (!chat) {
             throw new Error(`No se encontró el chat para el número: ${phoneNumber}`);
         }
 
-        // Agregar el mensaje al array de mensajes del chat
         chat.messages.push(message);
+        this.guardarMessageInJson( phoneNumber, chat );
 
-        // Obtener la ruta del archivo JSON correspondiente al chat
-        const filePath = path.join(this.pathMessages, `${phoneNumber}.json`);
+        return chat;
+    }
 
-        // Sobrescribir el archivo JSON con el nuevo contenido del chat
-        fs.writeFileSync(filePath, JSON.stringify(chat, null, 4), 'utf-8');
+    updateStatusMessage( shipmentStatus: ShipmentStatus ){
+        const phoneNumber = shipmentStatus.recipient_id;
+
+        const chat = this.getChatByPhoneNumber( phoneNumber );
+
+        chat.messages.map((message)=>{
+            if(message.id == shipmentStatus.id){
+                message.status = shipmentStatus.status as StatusMessage;
+            }
+
+            return message;
+        });
+
+        this.guardarMessageInJson( phoneNumber, chat );
 
         return chat;
     }

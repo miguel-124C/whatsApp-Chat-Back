@@ -34,7 +34,7 @@ export class ContactService {
     getContacts( ): Contact[] {
         // Obtener los archivos de la carpeta
         const files = fs.readdirSync(this.pathContacts);
-      
+        
         // Filtrar los archivos JSON
         const jsonFiles = files.filter(file => path.extname(file).toLowerCase() === '.json');
       

@@ -19,7 +19,7 @@ export class WhatsAppController {
         const [ error, shipmentMessageWhatsAppDto ] = ShipmentMessageWhatsAppDto.create( req.body );
         if(error) return res.sendStatus(404);
 
-        console.log(shipmentMessageWhatsAppDto?.shipmentStatus.status)
+        this.whatsAppService.updateStatusMessage(shipmentMessageWhatsAppDto!.shipmentStatus);
         res.sendStatus(200);
         break;
       }
