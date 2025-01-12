@@ -53,7 +53,7 @@ export class WhatsAppCloudApi {
             const chat = this.chatService.addMessage(contacts[0].wa_id, lastMessage);
 
             this.contactService.updateLastMessage(to, lastMessage);
-            WssService.instance.sendMessage('on-chat-changed', chat);
+            WssService.instance.sendMessage('on-chat-changed', chat!);
             WssService.instance.sendMessage('on-contact-changed', this.getListContacts());
 
             return true;
@@ -100,7 +100,9 @@ export class WhatsAppCloudApi {
             this.contactService.updateLastMessage(phoneNumber, lastMessage);
         
             const chat = this.chatService.addMessage(phoneNumber, lastMessage);
-            WssService.instance.sendMessage('on-chat-changed', chat);
+            if(chat){
+                WssService.instance.sendMessage('on-chat-changed', chat);
+            }
         }
 
         const contactsOrder = this.contactService.moveContactInFirstPosition( phoneNumber );

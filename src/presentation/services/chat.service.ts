@@ -57,6 +57,9 @@ export class ChatService {
     addMessage( phoneNumber: string, message: Message ){
         const chat = this.getChatByPhoneNumber( phoneNumber );
         
+        const messageExist = chat.messages.find((m)=> m.id == message.id );
+        if(messageExist) return undefined;
+
         // Si no existe el chat, deberías manejar este caso (crear un nuevo chat, por ejemplo)
         if (!chat) {
             throw new Error(`No se encontró el chat para el número: ${phoneNumber}`);
