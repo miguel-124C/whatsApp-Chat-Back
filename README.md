@@ -5,7 +5,7 @@
 Integracion con la api de meta de whatsapp
 Cracion de un chat, en tiempo real, usando WebsocketService
 
-[repositorio](https://github.com/miguel-124C/Projects-2025/tree/main/01-ENERO/WHATSAPP-CHAT)
+[Backend](https://github.com/miguel-124C/whatsApp-Chat-Back)
 
 ## Pasos a seguir
 1. Copiar el archivo ``.env.template`` y renombrarlo a ``.env``, luego rellenar con sus variables
